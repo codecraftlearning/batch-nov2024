@@ -1,14 +1,13 @@
 package models;
 
-public class Laptop {
+public class Laptop extends  ElectronicDevice {
 
     private String company;
     private String model;
     private Double price;
 
-    Laptop(String company, String model, Double price) {
-//        super(5L, 2L, 1L);
-        super();
+    public Laptop(String company, String model, Double price) {
+        super(12L, 12L, 2L);
         this.setCompany(company);
         this.setModel(model);
         this.setPrice(price);

@@ -1,6 +1,5 @@
-import models.Mobile;
-import models.Society;
-import models.Tower;
+import models.*;
+import nov08.Calculator;
 
 import java.math.BigInteger;
 
@@ -41,7 +40,27 @@ class Main {
 
 
         Mobile m1 = new Mobile("samsung", "s1", 40000.00);
-        System.out.println(m1);
+//        System.out.println(m1);
+        Laptop l1 = new Laptop("Apple", "mac", 250000.00);
+
+        ElectronicDevice e1 = new Mobile("Apple", "14+", 120000.00);
+        ElectronicDevice e2 = new Laptop("Apple", "mac", 250000.00);
+
+//        System.out.println(e1);
+//        System.out.println(m1);
+//        System.out.println(l1);
+
+
+        int sum = Calculator.sum(1,2,3,4,5,6,7,8,9,0,123,123,12312,443,543654,67457,657,34);
+//        System.out.println(sum);
+
+        String a = "ankit"; //string pool
+        String b = "ankit";
+
+        b+="xxx";
+
+        System.out.println(a);
+        System.out.println(b);
     }
 }
 
@@ -50,6 +69,10 @@ class Main {
 //JDK -> JRE -> it searches for main method
 
 /*
+
+int a  = new Integer(10);  -> b123rr4
+a = new Integer(20); -> 8hgs245
+
     class <Name of the class> {
         public static void main (String[] args) {
             //your code ges here

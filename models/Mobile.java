@@ -36,15 +36,15 @@ public class Mobile extends ElectronicDevice {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return  "Mobile{" +
-                "company='" + this.getCompany() + '\'' +
-                ", model='" + this.getModel() + '\'' +
-                ", price=" + this.getPrice() + '\'' +
-                ", consumption=" + super.getConsumption() + '\'' +
-                ", voltage=" + this.getVoltage() + '\'' +
-                ", amp=" + this.getAmp() + '\'' +
-                "}\n";
-    }
+//    @Override
+//    public String toString() {
+//        return  "Mobile{" +
+//                "company='" + this.getCompany() + '\'' +
+//                ", model='" + this.getModel() + '\'' +
+//                ", price=" + this.getPrice() + '\'' +
+//                ", consumption=" + super.getConsumption() + '\'' +
+//                ", voltage=" + this.getVoltage() + '\'' +
+//                ", amp=" + this.getAmp() + '\'' +
+//                "}\n";
+//    }
 }

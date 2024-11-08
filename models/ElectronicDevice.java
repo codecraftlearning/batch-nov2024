@@ -36,12 +36,12 @@ public class ElectronicDevice {
         this.amp = amp;
     }
 
-    @Override
-    public String toString() {
-        return "ElectronicDevice{" +
-                "consumption=" + consumption +
-                ", voltage=" + voltage +
-                ", amp=" + amp +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "ElectronicDevice{" +
+//                "consumption=" + consumption +
+//                ", voltage=" + voltage +
+//                ", amp=" + amp +
+//                '}';
+//    }
 }
