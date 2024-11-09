@@ -12,6 +12,11 @@ public class Mobile extends ElectronicDevice {
         this.setPrice(price);
     }
 
+
+    public String getName() {
+        return "";
+    }
+
     public String getCompany() {
         return company;
     }
