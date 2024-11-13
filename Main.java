@@ -1,23 +1,106 @@
 import interfaces.IPerson;
-import interfaces.Student;
+import models.ElectronicDevice;
+import models.Student;
+
+import java.util.Arrays;
+import java.util.Scanner;
 //
 
 
-
 public class Main {
-    public static void main(String[] args) {
+    public static void main (String[] args) {
+        Student s = new Student();
+        s.setName("Asd");
+        s.setAddress("dfe");
+        s.setAge(12);
+        s.setGender("Male");
+        s.setClassName("10th");
+        s.setPhoneNumber(123123123L);
+        s.setHeight(5.2D);
+        s.setWeight(50.5D);
+        s.setRollNumber(1);
 
-        Student s1 = new Student("Himanshu", "Male", 5.80, 75.00);
-        s1.setRoll(1);
-        s1.setRank(5);
-        s1.setClassNumber(10);
-        System.out.println(s1.getName());
-        System.out.println(s1.calculateBMI());
-        System.out.println(s1.getPetName());
+        System.out.println(s);
+
+        Student sx1 = new Student().rollNumber(1).age(12);
+        Student sx2 = new Student().rollNumber(1).age(12);
+
+
+        Student.Builder studentBuilder = new Student.Builder()
+                .age(12).gender("Male")
+                .address("ryrt").weight(35.3)
+                .height(4.5).name("erte")
+                .phoneNumber(12312312L).className("7th")
+                .rolNumber(1);
+
+        Student s1 = studentBuilder.build();
+        Student s2 = studentBuilder.build();
+        s2.setWeight(12.4);
+        Student s3 = studentBuilder.build();
+        Student s4 = studentBuilder.build();
+
     }
 }
 
 
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+////        System.out.println("Actors 50");
+////        System.out.println("Engineers 50");
+////
+////        String format = "%-9s %5d\n";
+////        System.out.printf(format, "Actors", 50);
+////        System.out.printf(format, "Engineers", 7000);
+//
+//
+//
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("please enter your password: ");
+//        String password = sc.next();
+//
+//        System.out.println("Thankyou your password is: " + password);
+//
+//    }
+//}
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        Student s1 = new Student("Himanshu", "Male", 5.80, 75.00);
+//        s1.setRoll(1);
+//        s1.setRank(5);
+//        s1.setClassNumber(10);
+//        System.out.println(s1.getName());
+//        System.out.println(s1.calculateBMI());
+//        System.out.println(s1.getPetName());
+//    }
+//}
+//
+//
 
 
 
