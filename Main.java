@@ -1,46 +1,81 @@
 import interfaces.IPerson;
 import models.ElectronicDevice;
 import models.Student;
+import services.FileOperations;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 //
 
 
+
+
 public class Main {
-    public static void main (String[] args) {
-        Student s = new Student();
-        s.setName("Asd");
-        s.setAddress("dfe");
-        s.setAge(12);
-        s.setGender("Male");
-        s.setClassName("10th");
-        s.setPhoneNumber(123123123L);
-        s.setHeight(5.2D);
-        s.setWeight(50.5D);
-        s.setRollNumber(1);
-
-        System.out.println(s);
-
-        Student sx1 = new Student().rollNumber(1).age(12);
-        Student sx2 = new Student().rollNumber(1).age(12);
-
-
-        Student.Builder studentBuilder = new Student.Builder()
-                .age(12).gender("Male")
-                .address("ryrt").weight(35.3)
-                .height(4.5).name("erte")
-                .phoneNumber(12312312L).className("7th")
-                .rolNumber(1);
-
-        Student s1 = studentBuilder.build();
-        Student s2 = studentBuilder.build();
-        s2.setWeight(12.4);
-        Student s3 = studentBuilder.build();
-        Student s4 = studentBuilder.build();
-
+    public static void main(String[] args) {
+        File file = FileOperations.getFile("./resourses/blobs/script", "txt");
+//        FileOperations.createFile(file);
+//        FileOperations.writeIntoFile(file, "This is my thirds file operations\n");
+        String content = FileOperations.readFromFile(FileOperations.getFile("./resourses/script", "txt"));
+        System.out.println(content);
+//
+//        FileOperations.deleteFile(FileOperations.getFile("./resourses/blobs/script", "txt"));
     }
 }
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        String str = "new string 1"; //immutable //this is not thread safe ->  not synchronised // faster
+//        System.out.println(str);
+//
+//        StringBuilder stringBuilder = new StringBuilder("new string 2"); // are mutable // not synchronised //faster
+//        System.out.println(stringBuilder);
+//
+//        StringBuffer stringBuffer = new StringBuffer("new String 3"); // are mutable // synchronised // slower
+//        System.out.println(stringBuffer);
+//
+//    }
+//}
+
+
+//public class Main {
+//    public static void main (String[] args) {
+//        Student s = new Student();
+//        s.setName("Asd");
+//        s.setAddress("dfe");
+//        s.setAge(12);
+//        s.setGender("Male");
+//        s.setClassName("10th");
+//        s.setPhoneNumber(123123123L);
+//        s.setHeight(5.2D);
+//        s.setWeight(50.5D);
+//        s.setRollNumber(1);
+//
+//        System.out.println(s);
+//
+//        Student sx1 = new Student().rollNumber(1).age(12);
+//        Student sx2 = new Student().rollNumber(1).age(12);
+//
+//
+//        Student.Builder studentBuilder = new Student.Builder()
+//                .age(12).gender("Male")
+//                .address("ryrt").weight(35.3)
+//                .height(4.5).name("erte")
+//                .phoneNumber(12312312L).className("7th")
+//                .rolNumber(1);
+//
+//        Student s1 = studentBuilder.build();
+//        Student s2 = studentBuilder.build();
+//        s2.setWeight(12.4);
+//        Student s3 = studentBuilder.build();
+//        Student s4 = studentBuilder.build();
+//
+//    }
+//}
 
 
 
