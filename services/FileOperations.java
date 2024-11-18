@@ -70,6 +70,34 @@ public class FileOperations {
         }
     }
 
+    public static void writeObject(Object object, String path) {
+        try (FileOutputStream fileOut = new FileOutputStream(path)) {
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(object);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object readObject(String path) {
+        Object object = null;
+        try (FileInputStream fileInput = new FileInputStream(path)) {
+            ObjectInputStream in = new ObjectInputStream(fileInput);
+            object = in.readObject();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return object;
+    }
+
+
+
     private static boolean check(File file) {
         if (file == null) {
             return false;

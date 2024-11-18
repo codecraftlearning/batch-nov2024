@@ -1,5 +1,7 @@
 import interfaces.IPerson;
 import models.ElectronicDevice;
+import models.Mobile;
+import models.Person;
 import models.Student;
 import services.FileOperations;
 
@@ -13,15 +15,47 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        File file = FileOperations.getFile("./resourses/blobs/script", "txt");
-//        FileOperations.createFile(file);
-//        FileOperations.writeIntoFile(file, "This is my thirds file operations\n");
-        String content = FileOperations.readFromFile(FileOperations.getFile("./resourses/script", "txt"));
-        System.out.println(content);
-//
-//        FileOperations.deleteFile(FileOperations.getFile("./resourses/blobs/script", "txt"));
+
+        Person person = new Person();  /// qw23424wef234
+        person.setName("asdasd");
+        person.setAge(21);
+        person.setComplexion("fair");
+        person.setHeight(5.2);
+        person.setHeight(45.0);
+
+        FileOperations.writeObject(person, "person.txt");
+
+//        Person p1 = (Person) FileOperations.readObject("person.txt"); //type cast
+//        System.out.println(p1);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//        File file = FileOperations.getFile("./resourses/blobs/script", "txt");
+////        FileOperations.createFile(file);
+////        FileOperations.writeIntoFile(file, "This is my thirds file operations\n");
+//        String content = FileOperations.readFromFile(FileOperations.getFile("./resourses/script", "txt"));
+//        System.out.println(content);
+////
+////        FileOperations.deleteFile(FileOperations.getFile("./resourses/blobs/script", "txt"));
+//    }
+//}
 
 
 
