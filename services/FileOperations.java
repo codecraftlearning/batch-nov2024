@@ -1,6 +1,7 @@
 package services;
 
 import java.io.*;
+import java.nio.charset.Charset;
 
 public class FileOperations {
 
@@ -31,7 +32,7 @@ public class FileOperations {
             return null;
         }
 
-        try (FileWriter fileWriter = new FileWriter(file.getPath(), true)) {
+        try (FileWriter fileWriter = new FileWriter(file.getPath(),true)) {
             fileWriter.write(content);
             System.out.println("File updated with the content");
         } catch (IOException e) {

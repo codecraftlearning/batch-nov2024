@@ -1,5 +1,9 @@
 package models;
 
+import constants.Identifications;
+import enums.Complexion;
+import enums.Gender;
+
 import java.io.Serializable;
 
 public class Person implements Serializable {
@@ -7,7 +11,9 @@ public class Person implements Serializable {
     private Integer age;
     private Double height;
     private Double weight;
-    private String complexion;
+    private Complexion complexion;
+    private Gender gender;
+    private Integer legCount = Identifications.DEFAULT_LEGS_COUNT;
 
     public String getName() {
         return name;
@@ -41,12 +47,28 @@ public class Person implements Serializable {
         this.weight = weight;
     }
 
-    public String getComplexion() {
+    public Complexion getComplexion() {
         return complexion;
     }
 
-    public void setComplexion(String complexion) {
+    public void setComplexion(Complexion complexion) {
         this.complexion = complexion;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Integer getLegCount() {
+        return legCount;
+    }
+
+    public void setLegCount(Integer legCount) {
+        this.legCount = legCount;
     }
 
     @Override

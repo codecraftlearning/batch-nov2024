@@ -1,3 +1,5 @@
+import enums.Complexion;
+import enums.Gender;
 import interfaces.IPerson;
 import models.ElectronicDevice;
 import models.Mobile;
@@ -12,23 +14,152 @@ import java.util.Scanner;
 
 
 
+/*
+
+                                                                            Exception
+
+                        Checked Exception                               Unchecked Exception                                 Error
+                        (compile-time exception)                        (Run-time exception)                                (Error)
+                                                              Null Pointer Exception                               Out of memory error
+                                                                                               IOException                                    Arithemetic Exception                                SyntaxError
+                            SQLException                                   Stack overflow error
+
+
+
+                        Throwable class ->  Exception, Error
+ */
+
+/*
+
+    Q: Could you explain try, catch and finally in java
+    Ans:  Try block provide a safe environment to execute a vulnerable code fragment which could throw and exception at any point of time.
+          If any exception occurred, then Catch blocks help us to implement a fallback mechanism which will land the program safely.
+          on the other hand Finally give us the liberty to close the necessary connection or destroy the references anyhow.
+
+
+ */
 
 public class Main {
     public static void main(String[] args) {
 
-        Person person = new Person();  /// qw23424wef234
-        person.setName("asdasd");
-        person.setAge(21);
-        person.setComplexion("fair");
-        person.setHeight(5.2);
-        person.setHeight(45.0);
+//        System.out.println(divide1(1,1));
 
-        FileOperations.writeObject(person, "person.txt");
+        try {
+            System.out.println(divide2(1, 0));
+        } catch (Exception e) {
+            System.out.println("wrong data sent to divide 2");
+        }finally {
+            System.out.println("all connections closed");
+        }
+    }
 
-//        Person p1 = (Person) FileOperations.readObject("person.txt"); //type cast
-//        System.out.println(p1);
+
+
+    public static Integer divide1(Integer a, Integer b) {
+        Integer value = 0;
+        try {
+            value = a / b;
+        } catch (ArithmeticException e) {
+            System.out.println("we encountered and exception");
+        }
+
+        return value;
+    }
+
+    public static Integer divide2(Integer a, Integer b) throws ArithmeticException {
+        Integer value = 0;
+        value = a / b;
+        return value;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        Person p = new Person();
+//
+////        p.setGender(Gender.Male);
+//        p.setGender(Gender.Male);
+//        p.setComplexion(Complexion.Fair);
+//
+//        System.out.println(p.getGender());
+//
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#00001  -> #99999
+//#00001 (1) -> #00005 (2) ->   #00009 (3) ....
+//  (head address) + (index * size in bytes);
+
+//  #00001->_______________________________1______________________________1_______________________________11______________________________100_____________________________101
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        Integer[] rolls = {1,2,3,4,5}; //static implementation of an array.
+//
+//        System.out.println(rolls[0]); // #00001 + (0 * 4) => #00001
+//        System.out.println(rolls[1]); // #00001 + (1 * 4) => #00005
+//        System.out.println(rolls[2]); // #00001 + (2 * 4) => #00009
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        Person person = new Person();  /// qw23424wef234
+//        person.setName("asdasd");
+//        person.setAge(21);
+//        person.setComplexion("fair");
+//        person.setHeight(5.2);
+//        person.setHeight(45.0);
+//
+//        FileOperations.writeObject(person, "person.txt");
+//
+////        Person p1 = (Person) FileOperations.readObject("person.txt"); //type cast
+////        System.out.println(p1);
+//    }
+//}
 
 
 
