@@ -1,3 +1,4 @@
+import Exceptions.AgeLimitException;
 import enums.Complexion;
 import enums.Gender;
 import interfaces.IPerson;
@@ -8,9 +9,39 @@ import models.Student;
 import services.FileOperations;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 //
+
+
+public class Main {
+    public static void main(String[] args){
+
+
+        ArrayList<Integer> ages = new ArrayList<>();
+        ages.add(12);
+        ages.add(10);
+        ages.add(44);
+        ages.add(18);
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -32,46 +63,62 @@ import java.util.Scanner;
 /*
 
     Q: Could you explain try, catch and finally in java
-    Ans:  Try block provide a safe environment to execute a vulnerable code fragment which could throw and exception at any point of time.
+    Ans:  Try block provide a safe environment to execute a vulnerable code fragment which could throw an exception at any point of time.
           If any exception occurred, then Catch blocks help us to implement a fallback mechanism which will land the program safely.
           on the other hand Finally give us the liberty to close the necessary connection or destroy the references anyhow.
 
 
  */
-
-public class Main {
-    public static void main(String[] args) {
-
-//        System.out.println(divide1(1,1));
-
-        try {
-            System.out.println(divide2(1, 0));
-        } catch (Exception e) {
-            System.out.println("wrong data sent to divide 2");
-        }finally {
-            System.out.println("all connections closed");
-        }
-    }
-
-
-
-    public static Integer divide1(Integer a, Integer b) {
-        Integer value = 0;
-        try {
-            value = a / b;
-        } catch (ArithmeticException e) {
-            System.out.println("we encountered and exception");
-        }
-
-        return value;
-    }
-
-    public static Integer divide2(Integer a, Integer b) throws ArithmeticException {
-        Integer value = 0;
-        value = a / b;
-        return value;
-    }
-}
+//
+//public class Main {
+//    public static void main(String[] args) {
+//
+//
+//        try {
+//            System.out.println(clubEntry(19));
+//        } catch (AgeLimitException e) {
+//            System.out.println(e);
+//        }
+//
+////        System.out.println(divide1(1,1));
+//
+////        try {
+////            System.out.println(divide2(1, 0));
+////        } catch (Exception e) {
+////            System.out.println("wrong data sent to divide 2");
+////        }finally {
+////            System.out.println("all connections closed");
+////        }
+//    }
+//
+//
+//
+//    public static Integer divide1(Integer a, Integer b) {
+//        Integer value = 0;
+//        try {
+//            value = a / b;
+//        } catch (ArithmeticException e) {
+//            System.out.println("we encountered and exception");
+//        }
+//
+//        return value;
+//    }
+//
+//    public static Integer divide2(Integer a, Integer b) throws ArithmeticException {
+//        Integer value = 0;
+//        value = a / b;
+//        return value;
+//    }
+//
+//
+//    public static String clubEntry(Integer age) throws AgeLimitException {
+//        if (age < 18) {
+//            throw AgeLimitException.lessThan18NotAllowed();
+//        }
+//
+//        return "Entry Accepted";
+//    }
+//}
 
 
 
