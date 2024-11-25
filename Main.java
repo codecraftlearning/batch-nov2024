@@ -2,33 +2,44 @@ import Exceptions.AgeLimitException;
 import enums.Complexion;
 import enums.Gender;
 import interfaces.IPerson;
-import models.ElectronicDevice;
-import models.Mobile;
-import models.Person;
-import models.Student;
+import models.*;
 import services.FileOperations;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.Serializable;
+import java.util.*;
 //
 
 
 public class Main {
     public static void main(String[] args){
 
+        Employee e1 = new Employee();
+        e1.setName("asdas");
+        e1.setAge(32);
+        e1.setGender(Gender.Male);
+        e1.setId(123L);
 
-        ArrayList<Integer> ages = new ArrayList<>();
-        ages.add(12);
-        ages.add(10);
-        ages.add(44);
-        ages.add(18);
+        Employee e2 = new Employee();
+        e2.setName("asdas");
+        e2.setAge(33);
+        e2.setGender(Gender.Male);
+        e2.setId(123L);
 
+        System.out.println(e1.equals(e2));
+        System.out.println(e1.hashCode());
+        System.out.println(e2.hashCode());
 
+        Map<Employee, String> employeeStringMap = new HashMap<>();
+        employeeStringMap.put(e1, e1.getName());
+        employeeStringMap.put(e2, e2.getName());
+
+        System.out.println(employeeStringMap);
     }
 }
+
+
+
 
 
 

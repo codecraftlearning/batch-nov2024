@@ -5,8 +5,9 @@ import enums.Complexion;
 import enums.Gender;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Person implements Serializable {
+public class Person implements Serializable, Cloneable {
     private String name;
     private Integer age;
     private Double height;
@@ -14,6 +15,7 @@ public class Person implements Serializable {
     private Complexion complexion;
     private Gender gender;
     private Integer legCount = Identifications.DEFAULT_LEGS_COUNT;
+    private ArrayList<String> clasees = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -71,6 +73,14 @@ public class Person implements Serializable {
         this.legCount = legCount;
     }
 
+    public ArrayList<String> getClasees() {
+        return clasees;
+    }
+
+    public void setClasees(ArrayList<String> clasees) {
+        this.clasees = clasees;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -80,5 +90,16 @@ public class Person implements Serializable {
                 ", weight=" + weight +
                 ", complexion='" + complexion + '\'' +
                 '}';
+    }
+
+    @Override
+    public Person clone()  {
+        try {
+            Person clone = (Person) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
