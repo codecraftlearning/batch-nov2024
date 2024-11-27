@@ -47,7 +47,7 @@ public class Employee extends Object{
             return false;
         }
 
-        if (emp.getClass() != this.getClass()) {
+        if (emp instanceof Employee) {
             return false;
         }
 

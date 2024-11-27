@@ -12,31 +12,135 @@ import java.util.*;
 
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Employee e1 = new Employee();
-        e1.setName("asdas");
-        e1.setAge(32);
-        e1.setGender(Gender.Male);
-        e1.setId(123L);
+        Map<Integer, String> studentMap = new HashMap<>();
+        studentMap.put(1, "asdasd");
+//        {
+//
+//            //only key ; not value
+//            int n = 16; => 12
+//            int hashCode = 12;
+//            int index = hashCode & (n-1); //=> 12   > 10
+//            n = n * 2;
+//            index = hashCode & (n-1); // 12
+//            System.out.println(index);
+//        }
 
-        Employee e2 = new Employee();
-        e2.setName("asdas");
-        e2.setAge(33);
-        e2.setGender(Gender.Male);
-        e2.setId(123L);
+        studentMap.put(2, "uiiu");
+        studentMap.put(3, "qweeqw"); // hashcode = 3; => index = 3
+        studentMap.put(3, "qwerty"); // hashcode = 3; => index = 3
+        studentMap.put(18, "lamp");
 
-        System.out.println(e1.equals(e2));
-        System.out.println(e1.hashCode());
-        System.out.println(e2.hashCode());
 
-        Map<Employee, String> employeeStringMap = new HashMap<>();
-        employeeStringMap.put(e1, e1.getName());
-        employeeStringMap.put(e2, e2.getName());
 
-        System.out.println(employeeStringMap);
+        /*
+            HashMap<Type of Key, Type of value> -
+                ArrayList<LinkedList>
+                    -  LinkedList<Map.Entry>
+                        - Map.Entry<Type of Key, Type of value>
+        */
+
+
+        //new entry => < 3, qwerty>
+       //exising entries =>  <3,qweeqw> -> Integer(3).equals(Integer(3)) -> true // replace the value
+
+        //new entry <18, lamp>
+        //existing entries <2, uiiu> => Integer(2).equals(Integer(18) -> false // append the value
+//
+//        System.out.println(Integer.valueOf("1").hashCode());   // for a Integer "hashCode -> value" "equals -> value1 == value2"
+        // hashCode -> 1  // equals (1 == 1) => true
+
+
+        /*
+                x(1)(a) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
+                y(2)(b) -> (unique id) (hashcode) = 2 => noOfBuckets % hashcode = 2
+                z(1)(c) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
+                i(17)(d) -> (unique id) (hashcode) = 17 => noOfBuckets % hashcode = 1
+
+                       i
+                       z
+                       x  y
+                    -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+                    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
+
+
+         */
+
+
+//        System.out.println(studentMap);
     }
 }
+
+
+
+//public class Main {
+//
+//    public static Integer findSecondLargest(int[] arr) {
+//
+//        if (arr == null || arr.length == 1) {
+//            return -1;
+//        }
+//
+//        if (arr.length == 2) {
+//            if (arr[0] == arr[1]) {
+//                return -1;
+//            }
+//
+//            return Math.min(arr[0], arr[1]);
+//        }
+//
+//        Integer first = -1; // -1, 5, 9
+//        Integer second = -1; // -1, 3, 5
+//
+//        for (int num : arr) { // 3, 5, 2, 9, 7
+//            if (first == -1 || num > first) {
+//                second = first;
+//                first = num;
+//            } else  if ((second == -1 || num > second) && num != first) {
+//                second = num;
+//            }
+//        }
+//
+//        return second;
+//    }
+//
+//    public static void main(String[] args) {
+//        int[] arr = {3,5,2,9,7};
+////        int[] arr = {3,5,2,9,7};
+////        int[] arr = {10, 10, 5};
+//        Integer secondLargest = findSecondLargest(arr);
+//        System.out.println(secondLargest);
+//    }
+//}
+
+
+//public class Main {
+//    public static void main(String[] args){
+//
+//        Employee e1 = new Employee();
+//        e1.setName("asdas");
+//        e1.setAge(32);
+//        e1.setGender(Gender.Male);
+//        e1.setId(123L);
+//
+//        Employee e2 = new Employee();
+//        e2.setName("asdas");
+//        e2.setAge(33);
+//        e2.setGender(Gender.Male);
+//        e2.setId(123L);
+//
+//        System.out.println(e1.equals(e2));
+//        System.out.println(e1.hashCode());
+//        System.out.println(e2.hashCode());
+//
+//        Map<Employee, String> employeeStringMap = new HashMap<>();
+//        employeeStringMap.put(e1, e1.getName());
+//        employeeStringMap.put(e2, e2.getName());
+//
+//        System.out.println(employeeStringMap);
+//    }
+//}
 
 
 
