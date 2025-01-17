@@ -1,7 +1,9 @@
 import Exceptions.AgeLimitException;
 import enums.Complexion;
 import enums.Gender;
+import interfaces.CustomInterface;
 import interfaces.IPerson;
+import map.CustomHashMap;
 import models.*;
 import services.FileOperations;
 
@@ -11,66 +13,269 @@ import java.util.*;
 //
 
 
-public class Main {
+class Main {
+
     public static void main(String[] args) {
+        List<MyObj> objs = new ArrayList<>();
+        objs.add(new MyObj(1, "a"));
+        objs.add(new MyObj(34, "b"));
+        objs.add(new MyObj(146, "c"));
+        objs.add(new MyObj(23, "d"));
+        objs.add(new MyObj(12, "e"));
+        objs.add(new MyObj(67, "f"));
 
-        Map<Integer, String> studentMap = new HashMap<>();
-        studentMap.put(1, "asdasd");
-//        {
-//
-//            //only key ; not value
-//            int n = 16; => 12
-//            int hashCode = 12;
-//            int index = hashCode & (n-1); //=> 12   > 10
-//            n = n * 2;
-//            index = hashCode & (n-1); // 12
-//            System.out.println(index);
-//        }
+        Collections.sort(objs, Comparator.comparing(o -> o.roll%10));
 
-        studentMap.put(2, "uiiu");
-        studentMap.put(3, "qweeqw"); // hashcode = 3; => index = 3
-        studentMap.put(3, "qwerty"); // hashcode = 3; => index = 3
-        studentMap.put(18, "lamp");
-
-
-
-        /*
-            HashMap<Type of Key, Type of value> -
-                ArrayList<LinkedList>
-                    -  LinkedList<Map.Entry>
-                        - Map.Entry<Type of Key, Type of value>
-        */
-
-
-        //new entry => < 3, qwerty>
-       //exising entries =>  <3,qweeqw> -> Integer(3).equals(Integer(3)) -> true // replace the value
-
-        //new entry <18, lamp>
-        //existing entries <2, uiiu> => Integer(2).equals(Integer(18) -> false // append the value
-//
-//        System.out.println(Integer.valueOf("1").hashCode());   // for a Integer "hashCode -> value" "equals -> value1 == value2"
-        // hashCode -> 1  // equals (1 == 1) => true
-
-
-        /*
-                x(1)(a) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
-                y(2)(b) -> (unique id) (hashcode) = 2 => noOfBuckets % hashcode = 2
-                z(1)(c) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
-                i(17)(d) -> (unique id) (hashcode) = 17 => noOfBuckets % hashcode = 1
-
-                       i
-                       z
-                       x  y
-                    -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-                    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
-
-
-         */
-
-
-//        System.out.println(studentMap);
+        System.out.println(objs);
     }
 }
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+//
+//        List<Integer> nums = new ArrayList<>();
+//        nums.add(23);
+//        nums.add(56);
+//        nums.add(345);
+//        nums.add(78);
+//        nums.add(12);
+//        nums.add(1);
+//        nums.add(79);
+//        nums.add(3);
+//
+
+
+////        Comparator<Integer> lastDigitComparator = new Comparator<Integer>() {
+////            @Override
+////            public int compare(Integer o1, Integer o2) {
+////                return (o1 % 10) - (o2 % 10);
+////            }
+////        };
+////
+////
+////        Comparator<Integer> lastDigitComparator = (Integer o1, Integer o2)-> {
+////                return (o1 % 10) - (o2 % 10);
+////        };
+////        Comparator<Integer> lastDigitComparator = (Integer o1, Integer o2) -> (o1 % 10) - (o2 % 10);
+//
+////        Comparator<Integer> lastDigitComparator = (o1, o2) -> (o1 % 10) - (o2 % 10);
+////
+//            Collections.sort(nums);
+////        nums.sort(lastDigitComparator);
+////
+//
+////        nums.sort((o1, o2) -> (o1 % 10) - (o2 % 10));
+//        nums.sort(Comparator.comparingInt(o -> (o % 10)));
+//
+//        System.out.println(nums);
+//    }
+
+//    public static void bubbleSort(List<Integer> nums) {
+//        for (int i = 0; i<nums.size(); i++) {
+//            for (int j = i+1; j<nums.size(); j++) {
+//                int a = nums.get(i) % 10;
+//                int b = nums.get(j) % 10;
+//
+//                if (a > b) {
+//                    int temp = nums.get(i);   // temp = num[i]
+//                    nums.set(i, nums.get(j)); // num[i] = num[j]
+//                    nums.set(j, temp);        // num[j] = temp
+//                }
+//            }
+//        }
+//    }
+//
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+//        String s = "some string";
+//
+//        String para = "";
+//        para += "first sentence\n";
+//        para += "second sentance\n";
+//        para += "third sentence";
+//
+//
+//        String para2 = """
+//                first sentence
+//                second sentence
+//                third sentence
+//                """;
+//
+////        System.out.println(para);
+//        System.out.println(para2);
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        CustomHashMap<Integer, String> map = new CustomHashMap<>();
+//        map.put(1, "asd");
+//        map.put(2, "wer");
+//        map.put(3, "tyu");
+//        map.put(4, "iop");
+//        map.put(5, "qwe");
+//        map.put(18, "zxc");
+//        map.put(45, "bnm");
+//        map.put(34, "bnm");
+//        map.put(1, "xxx");
+//        map.put(2, "yyy");
+//        map.put(3, "zzz");
+//
+//        System.out.println(map.entrySet());
+//    }
+//}
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        EntrySet<Integer, String> entrySet1 = new EntrySet<>(1, "asd");
+//        EntrySet<String, String> entrySet2 = new EntrySet<>("ret", "asd");
+//        EntrySet<Integer, Double> entrySet3 = new EntrySet<>(1, 1.1);
+//        EntrySet<String, Integer> entrySet4 = new EntrySet<>("rty", 1);
+//
+//        System.out.println(entrySet1);
+//        System.out.println(entrySet2);
+//        System.out.println(entrySet3);
+//        System.out.println(entrySet4);
+//
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        Map<Integer, String> studentMap = new HashMap<>();
+//        studentMap.put(1, "asdasd");
+////        {
+////
+////            //only key ; not value
+////            int n = 16; => 12
+////            int hashCode = 12;
+////            int index = hashCode & (n-1); //=> 12   > 10
+////            n = n * 2;
+////            index = hashCode & (n-1); // 12
+////            System.out.println(index);
+////        }
+//
+//        studentMap.put(2, "uiiu");
+//        studentMap.put(3, "qweeqw"); // hashcode = 3; => index = 3
+//        studentMap.put(3, "qwerty"); // hashcode = 3; => index = 3
+//        studentMap.put(18, "lamp");
+//
+//
+//
+//        /*
+//            HashMap<Type of Key, Type of value> -
+//                ArrayList<LinkedList>
+//                    -  LinkedList<Map.Entry>
+//                        - Map.Entry<Type of Key, Type of value>
+//        */
+//
+//
+//        //new entry => < 3, qwerty>
+//       //exising entries =>  <3,qweeqw> -> Integer(3).equals(Integer(3)) -> true // replace the value
+//
+//        //new entry <18, lamp>
+//        //existing entries <2, uiiu> => Integer(2).equals(Integer(18) -> false // append the value
+////
+////        System.out.println(Integer.valueOf("1").hashCode());   // for a Integer "hashCode -> value" "equals -> value1 == value2"
+//        // hashCode -> 1  // equals (1 == 1) => true
+//
+//
+//        /*
+//                x(1)(a) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
+//                y(2)(b) -> (unique id) (hashcode) = 2 => noOfBuckets % hashcode = 2
+//                z(1)(c) -> (unique id) (hashcode) = 1 => noOfBuckets % hashcode = 1
+//                i(17)(d) -> (unique id) (hashcode) = 17 => noOfBuckets % hashcode = 1
+//
+//                       i
+//                       z
+//                       x  y
+//                    -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+//                    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
+//
+//
+//         */
+//
+//
+////        System.out.println(studentMap);
+//    }
+//}
 
 
 
