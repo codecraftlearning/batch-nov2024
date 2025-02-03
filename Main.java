@@ -1,32 +1,53 @@
-import Exceptions.AgeLimitException;
-import enums.Complexion;
-import enums.Gender;
 import interfaces.CustomInterface;
-import interfaces.IPerson;
-import map.CustomHashMap;
-import models.*;
-import services.FileOperations;
+import models.myobj.MyObj;
 
-import java.io.File;
-import java.io.Serializable;
 import java.util.*;
 //
 
+abstract class TestX {
+    abstract public void print();
+}
 
 class Main {
 
     public static void main(String[] args) {
-        List<MyObj> objs = new ArrayList<>();
-        objs.add(new MyObj(1, "a"));
-        objs.add(new MyObj(34, "b"));
-        objs.add(new MyObj(146, "c"));
-        objs.add(new MyObj(23, "d"));
-        objs.add(new MyObj(12, "e"));
-        objs.add(new MyObj(67, "f"));
 
-        Collections.sort(objs, Comparator.comparing(o -> o.roll%10));
+        CustomInterface customInterface = new CustomInterface() {
+            @Override
+            public String changeCase(String value, String type) {
+                return null;
+            }
 
-        System.out.println(objs);
+            @Override
+            public String changeCase2(String value, String type) {
+                return null;
+            }
+        };
+
+        customInterface.printx();
+
+        TestX testX = new TestX() {
+            @Override
+            public void print() {
+                System.out.println("testx");
+            }
+        };
+
+//        TestX testX1 = () -> System.out.println("asd");
+
+        testX.print();
+//
+//        List<MyObjLastDigitCompare> objs = new ArrayList<>();
+//        objs.add(new MyObjLastDigitCompare(1, "a"));
+//        objs.add(new MyObjLastDigitCompare(34, "b"));
+//        objs.add(new MyObjLastDigitCompare(146, "c"));
+//        objs.add(new MyObjLastDigitCompare(23, "d"));
+//        objs.add(new MyObjLastDigitCompare(12, "e"));
+//        objs.add(new MyObjLastDigitCompare(67, "f"));
+//
+//        Collections.sort(objs);
+//
+//        System.out.println(objs);
     }
 }
 

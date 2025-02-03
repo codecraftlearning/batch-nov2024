@@ -1,6 +1,6 @@
-package models;
+package models.myobj;
 
-public class MyObj implements Comparable<MyObj> {
+public class MyObj {
     public Integer roll;
     public String name;
 
@@ -13,9 +13,6 @@ public class MyObj implements Comparable<MyObj> {
     public String toString() {
         return String.format("[%d, %s]", roll, name);
     }
-
-    @Override
-    public int compareTo(MyObj o) {
-        return this.roll - o.roll;
-    }
 }
+
+
