@@ -1,3 +1,5 @@
+import models.myobj.MyObj;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.*;
@@ -5,41 +7,93 @@ import java.util.stream.*;
 
 class Main {
     public static void main(String[] args) {
-        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(100_000_000).toList();
+        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(10000).toList();
+        Stream<Integer> stream1 = nums.stream();
+        List<MyObj> objs = stream1.map(n -> new MyObj(n, "")).toList();
+//        List<MyObj> objs2 = stream1.map(n -> new MyObj(n*2, "a")).toList();
+        List<MyObj> objs2 = nums.stream().map(n -> new MyObj(n*2, "a")).toList();
 
-        long start = System.nanoTime();
-
-        Long sum = 0l;
-        for (Long i = 0l; i<nums.size(); i++) {
-            sum += (nums.get(Math.toIntExact(i)) * 2);
-        }
-        System.out.println(sum);
-
-        long end = System.nanoTime();
-        System.out.println((end - start)/1_000_000);
-
-        System.out.println();
-
-        start = System.nanoTime();
-
-        Long sum2 = nums.stream().map(i -> Long.valueOf(i*2)).reduce(0L, Long::sum);
-        System.out.println(sum2);
-
-        end = System.nanoTime();
-        System.out.println((end - start)/1_000_000);
-
-
-        System.out.println();
-
-        start = System.nanoTime();
-
-        Long sum3 = (long) nums.stream().mapToInt(i -> i * 2).sum();
-        System.out.println(sum3);
-
-        end = System.nanoTime();
-        System.out.println((end - start)/1_000_000);
+        List<MyObj> oddObjs = objs.stream().filter(obj -> obj.roll % 2 != 0).peek(obj -> {
+            obj.roll *= 2;
+            obj.name = "default";
+        }).toList();
+        System.out.println(oddObjs);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+//        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(100_000_000).toList();
+//
+//        long start = System.nanoTime();
+//
+//        Long sum = 0l;
+//        for (Long i = 0l; i<nums.size(); i++) {
+//            sum += (nums.get(Math.toIntExact(i)) * 2);
+//        }
+//        System.out.println(sum);
+//
+//        long end = System.nanoTime();
+//        System.out.println((end - start)/1_000_000);
+//
+//        System.out.println();
+//
+//        start = System.nanoTime();
+//
+//        Long sum2 = nums.stream().map(i -> Long.valueOf(i*2)).reduce(0L, Long::sum);
+//        System.out.println(sum2);
+//
+//        end = System.nanoTime();
+//        System.out.println((end - start)/1_000_000);
+//
+//
+//        System.out.println();
+//
+//        start = System.nanoTime();
+//
+//        Long sum3 = (long) nums.stream().mapToInt(i -> i * 2).sum();
+//        System.out.println(sum3);
+//
+//        end = System.nanoTime();
+//        System.out.println((end - start)/1_000_000);
+//    }
+//}
 
 
 
