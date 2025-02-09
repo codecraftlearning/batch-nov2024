@@ -1,41 +1,163 @@
-import interfaces.CustomInterface;
-import models.myobj.MyObj;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.*;
 
-import java.util.*;
-//
-
-abstract class TestX {
-    abstract public void print();
-}
 
 class Main {
-
     public static void main(String[] args) {
+        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(100_000_000).toList();
 
-        CustomInterface customInterface = new CustomInterface() {
-            @Override
-            public String changeCase(String value, String type) {
-                return null;
-            }
+        long start = System.nanoTime();
 
-            @Override
-            public String changeCase2(String value, String type) {
-                return null;
-            }
-        };
+        Long sum = 0l;
+        for (Long i = 0l; i<nums.size(); i++) {
+            sum += (nums.get(Math.toIntExact(i)) * 2);
+        }
+        System.out.println(sum);
 
-        customInterface.printx();
+        long end = System.nanoTime();
+        System.out.println((end - start)/1_000_000);
 
-        TestX testX = new TestX() {
-            @Override
-            public void print() {
-                System.out.println("testx");
-            }
-        };
+        System.out.println();
+
+        start = System.nanoTime();
+
+        Long sum2 = nums.stream().map(i -> Long.valueOf(i*2)).reduce(0L, Long::sum);
+        System.out.println(sum2);
+
+        end = System.nanoTime();
+        System.out.println((end - start)/1_000_000);
+
+
+        System.out.println();
+
+        start = System.nanoTime();
+
+        Long sum3 = (long) nums.stream().mapToInt(i -> i * 2).sum();
+        System.out.println(sum3);
+
+        end = System.nanoTime();
+        System.out.println((end - start)/1_000_000);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+//        long start = System.nanoTime();
+//        long range = 1_000_000_000;
+//        long sum = 0;
+//        for (long i = 1; i<=range; i++) {
+//            sum += i;
+//        }
+//        System.out.println(sum);
+//        long end = System.nanoTime();
+//        System.out.println((end - start)/1_000_000);
+//
+//
+//        System.out.println();
+//
+////        start = System.nanoTime();
+////        Long range2 = 1_000_000_000L;
+////        Long sum2 = 0L;
+////        for (Long i = 1L; i<=range2; i++) {
+////            sum2 += i; // sum2 = sum2 + i; => sum2 = Long.valueOf(sum2.longValue() + i.longValue());
+////        }
+////        System.out.println(sum2);
+////        end = System.nanoTime();
+////        System.out.println((end - start)/1_000_000);
+//
+////        System.out.println();
+//
+//        start = System.nanoTime();
+//        long sum3 = LongStream.range(0, 1_000_000_001).sum();
+//        System.out.println(sum3);
+//        end = System.nanoTime();
+//        System.out.println((end - start)/1_000_000);
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//import interfaces.CustomInterface;
+//import models.myobj.MyObj;
+//
+//import java.util.*;
+////
+//
+//abstract class TestX {
+//    abstract public void print();
+//}
+//
+//class Main {
+//
+//    public static void main(String[] args) {
+//
+//        CustomInterface customInterface = new CustomInterface() {
+//            @Override
+//            public String changeCase(String value, String type) {
+//                return null;
+//            }
+//
+//            @Override
+//            public String changeCase2(String value, String type) {
+//                return null;
+//            }
+//        };
+//
+//        customInterface.printx();
+//
+//        TestX testX = new TestX() {
+//            @Override
+//            public void print() {
+//                System.out.println("testx");
+//            }
+//        };
 
 //        TestX testX1 = () -> System.out.println("asd");
 
-        testX.print();
+//        testX.print();
 //
 //        List<MyObjLastDigitCompare> objs = new ArrayList<>();
 //        objs.add(new MyObjLastDigitCompare(1, "a"));
@@ -48,8 +170,8 @@ class Main {
 //        Collections.sort(objs);
 //
 //        System.out.println(objs);
-    }
-}
+//    }
+//}
 
 
 
