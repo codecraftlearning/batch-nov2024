@@ -4,22 +4,65 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.*;
 
-
 class Main {
     public static void main(String[] args) {
-        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(10000).toList();
-        Stream<Integer> stream1 = nums.stream();
-        List<MyObj> objs = stream1.map(n -> new MyObj(n, "")).toList();
-//        List<MyObj> objs2 = stream1.map(n -> new MyObj(n*2, "a")).toList();
-        List<MyObj> objs2 = nums.stream().map(n -> new MyObj(n*2, "a")).toList();
+        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(10_000).toList();
+        Integer sum = nums.stream().mapToInt(n -> n).sum();
+        Integer sum2 = nums.stream().reduce(0, Integer::sum);
 
-        List<MyObj> oddObjs = objs.stream().filter(obj -> obj.roll % 2 != 0).peek(obj -> {
-            obj.roll *= 2;
-            obj.name = "default";
-        }).toList();
-        System.out.println(oddObjs);
+        String st = nums.stream().map(Object::toString).reduce("", String::concat);
+
+        System.out.println(sum);
+        System.out.println(sum2);
+        System.out.println(st);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+//        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(10000).toList();
+//        Stream<Integer> stream1 = nums.stream();
+//        List<MyObj> objs = stream1.map(n -> new MyObj(n, "")).toList();
+////        List<MyObj> objs2 = stream1.map(n -> new MyObj(n*2, "a")).toList();
+//        List<MyObj> objs2 = nums.stream().map(n -> new MyObj(n*2, "a")).toList();
+//
+//        List<MyObj> oddObjs = objs.stream().filter(obj -> obj.roll % 2 != 0).peek(obj -> {
+//            obj.roll *= 2;
+//            obj.name = "default";
+//        }).toList();
+//        System.out.println(oddObjs);
+//    }
+//}
 
 
 
