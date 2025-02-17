@@ -1,20 +1,42 @@
 import models.myobj.MyObj;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.*;
 
 class Main {
     public static void main(String[] args) {
-        List<Integer> nums = Stream.iterate(1, n -> n+1).limit(10_000).toList();
-        Integer sum = nums.stream().mapToInt(n -> n).sum();
-        Integer sum2 = nums.stream().reduce(0, Integer::sum);
+//        List<Integer> nums = Stream.generate(() -> new Random().nextInt()).limit(1000).toList();
+//        System.out.println(nums.size());
+//
+//        List<Integer> allOdds = nums.stream().filter(n -> n % 2 == 1).toList();
+//        System.out.println(allOdds.size());
+//
+//
+//        List<Integer> distincts = nums.stream().distinct().toList();
+//        System.out.println(distincts.size());
 
-        String st = nums.stream().map(Object::toString).reduce("", String::concat);
+        Long start = System.nanoTime();
+        List<List<Integer>> lol = Stream.generate(() -> {
+            return Stream.generate(() -> new Random().nextInt()).limit(10000).toList();
+        }).limit(510).toList();
+        Long end = System.nanoTime();
+        System.out.printf("Time Taken %d\n", (end-start)/100000);
 
-        System.out.println(sum);
-        System.out.println(sum2);
-        System.out.println(st);
+        start = System.nanoTime();
+        List<Integer> lolFlat = lol.stream().flatMap(List::stream).toList();
+        end = System.nanoTime();
+        System.out.printf("Time Taken %d\n", (end-start)/100000);
+
+        start = System.nanoTime();
+        List<Integer> lolFlatDouble1 = lolFlat.stream().map(n -> n * 2).toList();
+        end = System.nanoTime();
+        System.out.printf("Time Taken %d\n", (end-start)/100000);
+
+
+        start = System.nanoTime();
+        List<Integer> lolFlatDouble2 = lolFlat.parallelStream().map(n -> n * 2).toList();
+        end = System.nanoTime();
+        System.out.printf("Time Taken %d\n", (end-start)/100000);
     }
 }
 
