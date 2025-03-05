@@ -3,42 +3,119 @@ import models.myobj.MyObj;
 import java.util.*;
 import java.util.stream.*;
 
-class Main {
-    public static void main(String[] args) {
-//        List<Integer> nums = Stream.generate(() -> new Random().nextInt()).limit(1000).toList();
-//        System.out.println(nums.size());
-//
-//        List<Integer> allOdds = nums.stream().filter(n -> n % 2 == 1).toList();
-//        System.out.println(allOdds.size());
-//
-//
-//        List<Integer> distincts = nums.stream().distinct().toList();
-//        System.out.println(distincts.size());
 
-        Long start = System.nanoTime();
-        List<List<Integer>> lol = Stream.generate(() -> {
-            return Stream.generate(() -> new Random().nextInt()).limit(10000).toList();
-        }).limit(510).toList();
-        Long end = System.nanoTime();
-        System.out.printf("Time Taken %d\n", (end-start)/100000);
-
-        start = System.nanoTime();
-        List<Integer> lolFlat = lol.stream().flatMap(List::stream).toList();
-        end = System.nanoTime();
-        System.out.printf("Time Taken %d\n", (end-start)/100000);
-
-        start = System.nanoTime();
-        List<Integer> lolFlatDouble1 = lolFlat.stream().map(n -> n * 2).toList();
-        end = System.nanoTime();
-        System.out.printf("Time Taken %d\n", (end-start)/100000);
-
-
-        start = System.nanoTime();
-        List<Integer> lolFlatDouble2 = lolFlat.parallelStream().map(n -> n * 2).toList();
-        end = System.nanoTime();
-        System.out.printf("Time Taken %d\n", (end-start)/100000);
+class Shopping extends Thread {
+    @Override
+    public void run() {
+        Thread.yield();
+        System.out.println(Thread.currentThread().getName() + ":The shopping thread is working");
     }
 }
+
+class Cleaning implements Runnable {
+    private Cleaning() {}
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + ": The cleaning thread is working");
+    }
+
+    public static Thread getThread(String suffix, int priority) {
+        Thread t1 = new Thread(new Cleaning());
+        t1.setPriority(priority);
+        t1.setName("Cleaning Thread: " + suffix);
+
+        return t1;
+    }
+}
+
+
+class Main {
+    public static void main(String[] args) throws InterruptedException {
+
+        Shopping shopping = new Shopping();
+        shopping.setName("Shopping Thread");
+
+        Thread cleaningThread1 = Cleaning.getThread("bedroom", 4);
+        Thread cleaningThread2 = Cleaning.getThread("living room", 1);
+        Thread cleaningThread3 = Cleaning.getThread("dining room", 2);
+        Thread cleaningThread4 = Cleaning.getThread("kitchen room", 3);
+
+        shopping.start();
+        cleaningThread1.start();
+        cleaningThread2.start();
+        cleaningThread3.start();
+        cleaningThread4.start();
+
+        shopping.join();
+        System.out.println("I need something after the execution of shopping thread");
+
+        System.out.println("Main Thread ends");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) {
+////        List<Integer> nums = Stream.generate(() -> new Random().nextInt()).limit(1000).toList();
+////        System.out.println(nums.size());
+////
+////        List<Integer> allOdds = nums.stream().filter(n -> n % 2 == 1).toList();
+////        System.out.println(allOdds.size());
+////
+////
+////        List<Integer> distincts = nums.stream().distinct().toList();
+////        System.out.println(distincts.size());
+//
+//        Long start = System.nanoTime();
+//        List<List<Integer>> lol = Stream.generate(() -> {
+//            return Stream.generate(() -> new Random().nextInt()).limit(10000).toList();
+//        }).limit(510).toList();
+//        Long end = System.nanoTime();
+//        System.out.printf("Time Taken %d\n", (end-start)/100000);
+//
+//        start = System.nanoTime();
+//        List<Integer> lolFlat = lol.stream().flatMap(List::stream).toList();
+//        end = System.nanoTime();
+//        System.out.printf("Time Taken %d\n", (end-start)/100000);
+//
+//        start = System.nanoTime();
+//        List<Integer> lolFlatDouble1 = lolFlat.stream().map(n -> n * 2).toList();
+//        end = System.nanoTime();
+//        System.out.printf("Time Taken %d\n", (end-start)/100000);
+//
+//
+//        start = System.nanoTime();
+//        List<Integer> lolFlatDouble2 = lolFlat.parallelStream().map(n -> n * 2).toList();
+//        end = System.nanoTime();
+//        System.out.printf("Time Taken %d\n", (end-start)/100000);
+//    }
+//}
 
 
 
