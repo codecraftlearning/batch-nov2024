@@ -57,7 +57,7 @@ class Main {
 
 
 
-
+//  A[10], B[10], C[10]  -> result sum of all the list ((Sum of A) + (sum of B) + (Sum of c))
 
 
 
