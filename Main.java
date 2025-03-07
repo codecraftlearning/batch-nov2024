@@ -1,58 +1,167 @@
 import models.myobj.MyObj;
 
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.*;
 
+//callable and Future
 
-class Shopping extends Thread {
+class MathsProblem<T> implements Callable<T> {
+    private final FutureTask<T> futureTask;
+    private final Thread thread;
+
+    public MathsProblem() {
+        this.futureTask = new FutureTask<>(this);
+        this.thread = new Thread(this.futureTask);
+    }
+
     @Override
-    public void run() {
-        Thread.yield();
-        System.out.println(Thread.currentThread().getName() + ":The shopping thread is working");
+    public T call() throws Exception {
+        return (T) Stream.generate(() -> new Random().nextInt() % 100).limit(10).reduce(Integer::sum).get();
+    }
+
+    public void start() {
+        this.thread.start();
+    }
+
+    public T get() throws ExecutionException, InterruptedException {
+        return this.futureTask.get();
     }
 }
-
-class Cleaning implements Runnable {
-    private Cleaning() {}
-
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread().getName() + ": The cleaning thread is working");
-    }
-
-    public static Thread getThread(String suffix, int priority) {
-        Thread t1 = new Thread(new Cleaning());
-        t1.setPriority(priority);
-        t1.setName("Cleaning Thread: " + suffix);
-
-        return t1;
-    }
-}
-
 
 class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        MathsProblem<Integer> problem = new MathsProblem<>();
+        problem.start();
+        int sum = problem.get();
+        System.out.println(sum);
+//
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+//        Future<Integer> future = executorService.submit(problem);
+//        int sum2 = future.get();
+//        System.out.println(sum2);
 
-        Shopping shopping = new Shopping();
-        shopping.setName("Shopping Thread");
+        //create callable
+        //create futuretask
+        // create thread with future task
+        //start thread
+        //get the future task value
 
-        Thread cleaningThread1 = Cleaning.getThread("bedroom", 4);
-        Thread cleaningThread2 = Cleaning.getThread("living room", 1);
-        Thread cleaningThread3 = Cleaning.getThread("dining room", 2);
-        Thread cleaningThread4 = Cleaning.getThread("kitchen room", 3);
 
-        shopping.start();
-        cleaningThread1.start();
-        cleaningThread2.start();
-        cleaningThread3.start();
-        cleaningThread4.start();
 
-        shopping.join();
-        System.out.println("I need something after the execution of shopping thread");
+        //create callable
+        //start thread
+        //get the future value
 
-        System.out.println("Main Thread ends");
     }
 }
+
+
+/*
+
+start() → Starts the thread.
+run() → Defines the task performed by the thread.
+sleep(ms) → Puts the thread to sleep for a given time (in milliseconds).
+join() → Waits for a thread to finish execution before continuing.
+setName("name") → Sets the thread's name.
+getName() → Returns the thread's name.
+setPriority(int) → Sets thread priority (1 to 10).
+yield() → Temporarily pauses execution to allow other threads to execute.
+isAlive() → Checks if the thread is still running.
+
+
+New → Created but not started (new Thread()).
+Runnable → Ready to run (start() called).
+Running → Executing the run() method.
+Blocked/Waiting → Waiting for a resource or another thread.
+Terminated → Execution finished.
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//class Shopping extends Thread {
+//    @Override
+//    public void run() {
+//        Thread.yield();
+//        System.out.println(Thread.currentThread().getName() + ":The shopping thread is working");
+//    }
+//}
+//
+//class Cleaning implements Runnable {
+//    private Cleaning() {}
+//
+//    @Override
+//    public void run() {
+//        System.out.println(Thread.currentThread().getName() + ": The cleaning thread is working");
+//    }
+//
+//    public static Thread getThread(String suffix, int priority) {
+//        Thread t1 = new Thread(new Cleaning());
+//        t1.setPriority(priority);
+//        t1.setName("Cleaning Thread: " + suffix);
+//
+//        return t1;
+//    }
+//}
+//
+//
+//class Main {
+//    public static void main(String[] args) throws InterruptedException {
+//
+//        Shopping shopping = new Shopping();
+//        shopping.setName("Shopping Thread");
+//
+//        Thread cleaningThread1 = Cleaning.getThread("bedroom", 4);
+//        Thread cleaningThread2 = Cleaning.getThread("living room", 1);
+//        Thread cleaningThread3 = Cleaning.getThread("dining room", 2);
+//        Thread cleaningThread4 = Cleaning.getThread("kitchen room", 3);
+//
+//        shopping.start();
+//        cleaningThread1.start();
+//        cleaningThread2.start();
+//        cleaningThread3.start();
+//        cleaningThread4.start();
+//
+//        shopping.join();
+//        System.out.println("I need something after the execution of shopping thread");
+//
+//        System.out.println("Main Thread ends");
+//    }
+//}
 
 
 
