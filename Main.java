@@ -2,59 +2,173 @@ import models.myobj.MyObj;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.*;
 
-//callable and Future
 
-class MathsProblem<T> implements Callable<T> {
-    private final FutureTask<T> futureTask;
-    private final Thread thread;
+class SharedResource {
+    ReentrantLock reentrantLock = new ReentrantLock(true);
+    private String data;
 
-    public MathsProblem() {
-        this.futureTask = new FutureTask<>(this);
-        this.thread = new Thread(this.futureTask);
+    SharedResource() {
+        this.data = "";
+    }
+    
+    public synchronized void concat(String st) {
+        this.data += st;
     }
 
-    @Override
-    public T call() throws Exception {
-        return (T) Stream.generate(() -> new Random().nextInt() % 100).limit(10).reduce(Integer::sum).get();
+    public void concat2(String st) {
+        synchronized (this) {
+            this.data += st;
+        }
     }
 
-    public void start() {
-        this.thread.start();
+    public void concat3(String st) {
+//        this.reentrantLock.lock();
+//        this.data += st;
+//        this.reentrantLock.unlock();
+
+        if (this.reentrantLock.tryLock()) {
+            try {
+                this.data += st;
+            } finally {
+                this.reentrantLock.unlock();
+            }
+        }
     }
 
-    public T get() throws ExecutionException, InterruptedException {
-        return this.futureTask.get();
+    public synchronized static void print() {
+        for(int i =0; i<10; i++) {
+            System.out.println(i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getData() {
+        return this.data;
     }
 }
 
 class Main {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        MathsProblem<Integer> problem = new MathsProblem<>();
-        problem.start();
-        int sum = problem.get();
-        System.out.println(sum);
-//
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
-//        Future<Integer> future = executorService.submit(problem);
-//        int sum2 = future.get();
-//        System.out.println(sum2);
+    public static void main(String[] args) throws InterruptedException {
+        SharedResource resource = new SharedResource();
+        
+        Thread t1 = new Thread(() -> {
+            resource.concat3("thread 1");
+//            SharedResource.print();
+        });
+        Thread t2 = new Thread(() -> {
+            resource.concat3("thread 2");
+//            SharedResource.print();
+        });
+        Thread t3 = new Thread(() -> {
+            resource.concat3("thread 3");
+//            SharedResource.print();
+        });
 
-        //create callable
-        //create futuretask
-        // create thread with future task
-        //start thread
-        //get the future task value
+        t1.start();
+        t2.start();
+        t3.start();
 
+        t1.join();
+        t2.join();
+        t3.join();
 
-
-        //create callable
-        //start thread
-        //get the future value
-
+        System.out.println(resource.getData());
     }
 }
+
+
+
+/*
+    4 types of synchronization
+        1). method
+        2). block
+        3). static
+        4). reentrant
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////callable and Future
+//
+//class MathsProblem<T> implements Callable<T> {
+//    private final FutureTask<T> futureTask;
+//    private final Thread thread;
+//
+//    public MathsProblem() {
+//        this.futureTask = new FutureTask<>(this);
+//        this.thread = new Thread(this.futureTask);
+//    }
+//
+//    @Override
+//    public T call() throws Exception {
+//        return (T) Stream.generate(() -> new Random().nextInt() % 100).limit(10).reduce(Integer::sum).get();
+//    }
+//
+//    public void start() {
+//        this.thread.start();
+//    }
+//
+//    public T get() throws ExecutionException, InterruptedException {
+//        return this.futureTask.get();
+//    }
+//}
+//
+//class Main {
+//    public static void main(String[] args) throws ExecutionException, InterruptedException {
+//        MathsProblem<Integer> problem = new MathsProblem<>();
+//        problem.start();
+//        int sum = problem.get();
+//        System.out.println(sum);
+////
+////        ExecutorService executorService = Executors.newSingleThreadExecutor();
+////        Future<Integer> future = executorService.submit(problem);
+////        int sum2 = future.get();
+////        System.out.println(sum2);
+//
+//        //create callable
+//        //create futuretask
+//        // create thread with future task
+//        //start thread
+//        //get the future task value
+//
+//
+//
+//        //create callable
+//        //start thread
+//        //get the future value
+//
+//    }
+//}
 
 
 /*
