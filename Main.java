@@ -6,82 +6,254 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.*;
 
 
-class SharedResource {
-    ReentrantLock reentrantLock = new ReentrantLock(true);
-    private String data;
+//deadlock problem
 
-    SharedResource() {
-        this.data = "";
-    }
-    
-    public synchronized void concat(String st) {
-        this.data += st;
-    }
-
-    public void concat2(String st) {
-        synchronized (this) {
-            this.data += st;
-        }
-    }
-
-    public void concat3(String st) {
-//        this.reentrantLock.lock();
-//        this.data += st;
-//        this.reentrantLock.unlock();
-
-        if (this.reentrantLock.tryLock()) {
-            try {
-                this.data += st;
-            } finally {
-                this.reentrantLock.unlock();
-            }
-        }
-    }
-
-    public synchronized static void print() {
-        for(int i =0; i<10; i++) {
-            System.out.println(i);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public String getData() {
-        return this.data;
-    }
-}
 
 class Main {
-    public static void main(String[] args) throws InterruptedException {
-        SharedResource resource = new SharedResource();
-        
+    static final Object lock1 = new Object();
+    static final Object lock2 = new Object();
+
+    public static void main(String[] args) {
         Thread t1 = new Thread(() -> {
-            resource.concat3("thread 1");
-//            SharedResource.print();
+            synchronized (lock1) {
+                System.out.println("Ankit: Holding backetball...");
+
+                try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+                System.out.println("Ankit: Waiting for football...");
+                synchronized (lock2) {
+                    System.out.println("ankit: Acquired football!");
+                }
+            }
         });
+
         Thread t2 = new Thread(() -> {
-            resource.concat3("thread 2");
-//            SharedResource.print();
-        });
-        Thread t3 = new Thread(() -> {
-            resource.concat3("thread 3");
-//            SharedResource.print();
+            synchronized (lock2) {
+                System.out.println("himanshu: Holding football...");
+
+                try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+                System.out.println("himanshu: Waiting for basketball...");
+                synchronized (lock1) {
+                    System.out.println("himanshu: Acquired basketball!");
+                }
+            }
         });
 
         t1.start();
         t2.start();
-        t3.start();
-
-        t1.join();
-        t2.join();
-        t3.join();
-
-        System.out.println(resource.getData());
     }
 }
+
+
+
+//producer consumer problem
+// producer -> produces and consumer -> consumes
+
+//class Resource {
+//    private Queue<String> items = new PriorityQueue<>();
+//    private String ing1;
+//    private String ing2;
+//
+//    public synchronized void createIngredient1() throws InterruptedException {
+//        this.ing1 = "ing1";
+//        notify();
+//    }
+//
+//    public synchronized void createIngredient2() throws InterruptedException {
+//        this.ing2 = "ing2";
+//        notify();
+//    }
+//
+//    public synchronized void addItem (String item) {
+//        items.add(item);
+//        notify();
+//    }
+//
+//    public synchronized String getItem() throws InterruptedException {
+//        wait();
+//        return items.poll();
+//    }
+//
+//    public void printItems() {
+//        System.out.println("Resource summary: "+this.items);
+//    }
+//}
+//
+//class Producer extends Thread {
+//
+//    private Resource resource;
+//    private String item;
+//
+//    public Producer (Resource resource, String item) {
+//        this.resource = resource;
+//        this.item = item;
+//    }
+//
+//    @Override
+//    public void run() {
+//        for (int i = 0; i<5; i++) {
+//            try {
+//                Thread.sleep(1000);
+//                this.resource.createIngredient1();
+//                this.resource.createIngredient2();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            this.resource.addItem(this.item);
+//            System.out.printf("Producer %s: item produced\n", this.item);
+//        }
+//    }
+//}
+//
+//class Consumer extends Thread {
+//    private Resource resource;
+//
+//    public Consumer (String name, Resource resource) {
+//        this.resource = resource;
+//        super.setName(name);
+//    }
+//
+//    @Override
+//    public void run() {
+//        while (true) {
+//            String item = null;
+//            try {
+//                item = resource.getItem();
+//
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            if (item != null) {
+//                System.out.printf("Consumer %s: consumed %s\n", super.getName(), item);
+//            } else {
+//                System.out.println("No items in resource");
+//            }
+//        }
+//    }
+//}
+//
+//class Main {
+//    public static void main(String[] args) throws InterruptedException {
+//        Resource resource = new Resource();
+//        Producer producer = new Producer(resource, "milk");
+//        Consumer consumer1 = new Consumer("himanshu", resource);
+//        Consumer consumer2 = new Consumer("ankit", resource);
+//        producer.start();
+//        consumer2.start();
+//        consumer1.start();
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class SharedResource {
+//    ReentrantLock reentrantLock = new ReentrantLock(true);
+//    private String data;
+//
+//    SharedResource() {
+//        this.data = "";
+//    }
+//
+//    public synchronized void concat(String st) {
+//        this.data += st;
+//    }
+//
+//    public void concat2(String st) {
+//        synchronized (this) {
+//            this.data += st;
+//        }
+//    }
+//
+//    public void concat3(String st) {
+////        this.reentrantLock.lock();
+////        this.data += st;
+////        this.reentrantLock.unlock();
+//
+//        if (this.reentrantLock.tryLock()) {
+//            try {
+//                this.data += st;
+//            } finally {
+//                this.reentrantLock.unlock();
+//            }
+//        }
+//    }
+//
+//    public synchronized static void print() {
+//        for(int i =0; i<10; i++) {
+//            System.out.println(i);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    public String getData() {
+//        return this.data;
+//    }
+//}
+//
+//class Main {
+//    public static void main(String[] args) throws InterruptedException {
+//        SharedResource resource = new SharedResource();
+//
+//        Thread t1 = new Thread(() -> {
+//            resource.concat3("thread 1");
+////            SharedResource.print();
+//        });
+//        Thread t2 = new Thread(() -> {
+//            resource.concat3("thread 2");
+////            SharedResource.print();
+//        });
+//        Thread t3 = new Thread(() -> {
+//            resource.concat3("thread 3");
+////            SharedResource.print();
+//        });
+//
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//
+//        t1.join();
+//        t2.join();
+//        t3.join();
+//
+//        System.out.println(resource.getData());
+//    }
+//}
 
 
 
