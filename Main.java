@@ -1,49 +1,196 @@
 import models.myobj.MyObj;
 
+import java.sql.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.*;
 
 
-//deadlock problem
+
 
 
 class Main {
-    static final Object lock1 = new Object();
-    static final Object lock2 = new Object();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        String url = "jdbc:mysql://localhost:3306/code-craft";
+        String uname = "root";
+        String password = "root";
 
-    public static void main(String[] args) {
-        Thread t1 = new Thread(() -> {
-            synchronized (lock1) {
-                System.out.println("Ankit: Holding backetball...");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(url, uname, password);
+        System.out.println("established connection!!");
 
-                try { Thread.sleep(100); } catch (InterruptedException e) {}
+//        String query = """
+//                    create table user (
+//                        id int auto_increment primary key,
+//                        name varchar(50) not null,
+//                        email varchar(100) unique not null,
+//                        created_at timestamp default current_timestamp
+//                    )
+//                """;
 
-                System.out.println("Ankit: Waiting for football...");
-                synchronized (lock2) {
-                    System.out.println("ankit: Acquired football!");
-                }
-            }
-        });
+//        String query = """
+//                    insert into user (name, email) value ('ankit2', 'codecraft2.com'), ('himanshu', 'himanshu@gmail.com'), ('xyz', 'xyz@gmail.com');
+//                """;
 
-        Thread t2 = new Thread(() -> {
-            synchronized (lock2) {
-                System.out.println("himanshu: Holding football...");
+//        String query = """
+//                    select * from user;
+//                """;
+//
+//        Statement statement = connection.createStatement();
+////        statement.execute(query);
+//        ResultSet set = statement.executeQuery(query);
+//        Map<String, String> users = new HashMap<>();
+//        while (set.next()) {
+//            users.put(set.getString("name"), set.getString("email"));
+//        }
+//        System.out.println(users);
 
-                try { Thread.sleep(100); } catch (InterruptedException e) {}
 
-                System.out.println("himanshu: Waiting for basketball...");
-                synchronized (lock1) {
-                    System.out.println("himanshu: Acquired basketball!");
-                }
-            }
-        });
 
-        t1.start();
-        t2.start();
+//        String query = """
+//                    insert into user (name, email) values (?, ?);
+//                """;
+//        PreparedStatement preparedStatement = connection.prepareStatement(query);
+//        preparedStatement.setString(1,"abcd");
+//        preparedStatement.setString(2,"abcd@gmail.com");
+//
+//        preparedStatement.execute();
+
+        String query = "SELECT * FROM user WHERE name = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1,"abcd");
+
+        preparedStatement.execute(query);
+
+        connection.close();
     }
 }
+
+// how to use insert query in jdbc using variables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//class Main {
+//    public static void main(String[] args) {
+//        String st = "abbaredd";
+//
+//
+//        Map<Character, Integer> carMap = new HashMap<>();
+//        char[] stArr = st.toCharArray();
+//        String res = "";
+//        for (int i = 0; i<stArr.length; i++) {
+//            if (carMap.containsKey(stArr[i])) {
+//                res += stArr[i];
+//            } else {
+//                carMap.put(stArr[i], 0);
+//            }
+//        }
+//        System.out.println(res);
+//
+//        String res2 = st.chars().distinct().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.joining());
+//        System.out.println(res2);
+//
+//        String res3 = st.chars().boxed().collect(Collectors.groupingBy(c -> c, HashMap::new, Collectors.counting()))
+//                .entrySet().stream().filter(entry -> entry.getValue() > 1)
+//                .map(entry -> String.valueOf((char) entry.getKey().intValue()))
+//                .collect(Collectors.joining());
+//
+//        System.out.println(res3);
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//deadlock problem
+
+
+//class Main {
+//    static final Object lock1 = new Object();
+//    static final Object lock2 = new Object();
+//
+//    public static void main(String[] args) {
+//        Thread t1 = new Thread(() -> {
+//            synchronized (lock1) {
+//                System.out.println("Ankit: Holding backetball...");
+//
+//                try { Thread.sleep(100); } catch (InterruptedException e) {}
+//
+//                System.out.println("Ankit: Waiting for football...");
+//                synchronized (lock2) {
+//                    System.out.println("ankit: Acquired football!");
+//                }
+//            }
+//        });
+//
+//        Thread t2 = new Thread(() -> {
+//            synchronized (lock2) {
+//                System.out.println("himanshu: Holding football...");
+//
+//                try { Thread.sleep(100); } catch (InterruptedException e) {}
+//
+//                System.out.println("himanshu: Waiting for basketball...");
+//                synchronized (lock1) {
+//                    System.out.println("himanshu: Acquired basketball!");
+//                }
+//            }
+//        });
+//
+//        t1.start();
+//        t2.start();
+//    }
+//}
 
 
 
