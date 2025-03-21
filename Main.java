@@ -1,71 +1,170 @@
-import models.myobj.MyObj;
-
-import java.sql.*;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.*;
 
+abstract class Doctor implements Comparable<Doctor> {
 
+    String id;
+    String name;
+    Long phoneNumber;
 
+    public Doctor(String id, String name, Long phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Doctor)) {
+           return false;
+        }
 
-class Main {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        String url = "jdbc:mysql://localhost:3306/code-craft";
-        String uname = "root";
-        String password = "root";
+        Doctor d = (Doctor) o;
+        if (!this.id.equals(d.id)) {
+            return false;
+        }
+        if (!this.phoneNumber.equals(d.phoneNumber)) {
+            return false;
+        }
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(url, uname, password);
-        System.out.println("established connection!!");
+        return true;
+    }
 
-//        String query = """
-//                    create table user (
-//                        id int auto_increment primary key,
-//                        name varchar(50) not null,
-//                        email varchar(100) unique not null,
-//                        created_at timestamp default current_timestamp
-//                    )
-//                """;
+    @Override
+    public String toString() {
+        return String.format("[%s, %s, %d]", this.id, this.name, this.phoneNumber);
+    }
 
-//        String query = """
-//                    insert into user (name, email) value ('ankit2', 'codecraft2.com'), ('himanshu', 'himanshu@gmail.com'), ('xyz', 'xyz@gmail.com');
-//                """;
+    @Override
+    public int compareTo(Doctor d) {
+        return this.id.compareTo(d.id);
+    }
 
-//        String query = """
-//                    select * from user;
-//                """;
-//
-//        Statement statement = connection.createStatement();
-////        statement.execute(query);
-//        ResultSet set = statement.executeQuery(query);
-//        Map<String, String> users = new HashMap<>();
-//        while (set.next()) {
-//            users.put(set.getString("name"), set.getString("email"));
-//        }
-//        System.out.println(users);
+    public abstract int compareTo(DoctorByName d);
+}
 
+class DoctorByName extends Doctor implements Comparable<Doctor> {
 
+    public DoctorByName(String id, String name, Long phoneNumber) {
+        super(id, name, phoneNumber);
+    }
 
-//        String query = """
-//                    insert into user (name, email) values (?, ?);
-//                """;
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//        preparedStatement.setString(1,"abcd");
-//        preparedStatement.setString(2,"abcd@gmail.com");
-//
-//        preparedStatement.execute();
-
-        String query = "SELECT * FROM user WHERE name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,"abcd");
-
-        preparedStatement.execute(query);
-
-        connection.close();
+    @Override
+    public int compareTo(DoctorByName d) {
+        return this.name.compareTo(d.name);
     }
 }
+
+class DoctorByPhoneNumber extends Doctor implements Comparable<Doctor> {
+    public DoctorByPhoneNumber(String id, String name, Long phoneNumber) {
+        super(id, name, phoneNumber);
+    }
+
+    @Override
+    public int compareTo(DoctorByName d) {
+        return this.phoneNumber.compareTo(d.phoneNumber);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+
+        DoctorByName d1 = new DoctorByName("1", "b", 123123127L);
+        DoctorByName d2 = new DoctorByName("2", "s", 123123121L);
+        DoctorByName d3 = new DoctorByName("3", "t", 123123123L);
+        DoctorByName d4 = new DoctorByName("4", "q", 123123120L);
+
+        List<DoctorByName> doctorList = new ArrayList<>();
+        doctorList.add(d1);
+        doctorList.add(d2);
+        doctorList.add(d3);
+        doctorList.add(d4);
+
+        Comparator<Doctor> doctorIdComparator = new Comparator<Doctor>() {
+            @Override
+            public int compare(Doctor d1, Doctor d2) {
+                return d1.id.compareTo(d2.id);
+            }
+        };
+
+//        doctorList.sort(Comparator.comparing(d -> d.phoneNumber));
+
+        Collections.sort(doctorList);
+
+        System.out.println(doctorList);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//class Main {
+//    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//        String url = "jdbc:mysql://localhost:3306/code-craft";
+//        String uname = "root";
+//        String password = "root";
+//
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection connection = DriverManager.getConnection(url, uname, password);
+//        System.out.println("established connection!!");
+//
+////        String query = """
+////                    create table user (
+////                        id int auto_increment primary key,
+////                        name varchar(50) not null,
+////                        email varchar(100) unique not null,
+////                        created_at timestamp default current_timestamp
+////                    )
+////                """;
+//
+////        String query = """
+////                    insert into user (name, email) value ('ankit2', 'codecraft2.com'), ('himanshu', 'himanshu@gmail.com'), ('xyz', 'xyz@gmail.com');
+////                """;
+//
+////        String query = """
+////                    select * from user;
+////                """;
+////
+////        Statement statement = connection.createStatement();
+//////        statement.execute(query);
+////        ResultSet set = statement.executeQuery(query);
+////        Map<String, String> users = new HashMap<>();
+////        while (set.next()) {
+////            users.put(set.getString("name"), set.getString("email"));
+////        }
+////        System.out.println(users);
+//
+//
+//
+////        String query = """
+////                    insert into user (name, email) values (?, ?);
+////                """;
+////        PreparedStatement preparedStatement = connection.prepareStatement(query);
+////        preparedStatement.setString(1,"abcd");
+////        preparedStatement.setString(2,"abcd@gmail.com");
+////
+////        preparedStatement.execute();
+//
+//        String query = "SELECT * FROM user WHERE name = ?";
+//        PreparedStatement preparedStatement = connection.prepareStatement(query);
+//        preparedStatement.setString(1,"abcd");
+//
+//        preparedStatement.execute(query);
+//
+//        connection.close();
+//    }
+//}
 
 // how to use insert query in jdbc using variables
 
